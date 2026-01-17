@@ -19,3 +19,5 @@ Homework_9_2_1.ipynb - Домашнє завдання: Списки
 Homework_9_2_2.ipynb - Домашнє завдання: Словники, набори, кортежі
 
 Homework_9_2_3.ipynb - Домашнє завдання: Control Flow
+
+Homework_9_3_1.ipynb - Домашнє завдання: Цикл for
