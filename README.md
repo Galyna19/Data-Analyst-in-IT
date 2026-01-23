@@ -27,3 +27,5 @@ Homework_9_3_2.ipynb - Домашнє завдання: Comprehension в Python
 Homework_9_3_3.ipynb - Домашнє завдання: Цикл while
 
 Homework_9_4_1.ipynb - Домашнє завдання: Функції. Основи.
+
+Homework_9_4_2.ipynb - Домашнє завдання: Функції. Продовження.
