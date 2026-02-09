@@ -34,4 +34,6 @@ Homework_9_5_1.ipynb - Домашнє завдання: Модулі. Винят
 
 Homework_9_5_2.ipynb - Домашнє завдання: Класи
 
+File1.png, File2.png, File3.png - Домашнє завдання: git
+
 Homework_10_1_1.ipynb - Домашнє завдання: Введення у Pandas та Numpy
