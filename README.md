@@ -37,3 +37,5 @@ Homework_9_5_2.ipynb - Домашнє завдання: Класи
 File1.png, File2.png, File3.png - Домашнє завдання: git
 
 Homework_10_1_1.ipynb - Домашнє завдання: Введення у Pandas та Numpy
+
+Homework_10_2_1.ipynb - Домашнє завдання: Основи роботи з даними у Pandas
