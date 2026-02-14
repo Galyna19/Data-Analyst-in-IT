@@ -42,3 +42,6 @@ Homework_10_2_1.ipynb - Домашнє завдання: Основи робот
 
 Homework_10_3_1.ipynb - Домашнє завдання: Розширені методи обробки даних у Pandas
 
+Homework_10_4_1.ipynb - Домашнє завдання: apply, groupby, pivot_table
+
+
