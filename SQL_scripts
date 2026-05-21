@@ -1,0 +1,111 @@
+-- 1. Базовий dataset (Excel)
+
+SELECT
+    ad.app_download_key,
+    ad.platform,
+    ad.download_ts,
+
+    s.user_id,
+    s.signup_ts,
+
+    rr.ride_id,
+    rr.request_ts,
+    rr.accept_ts,
+    rr.pickup_ts,
+    rr.dropoff_ts,
+    rr.cancel_ts,
+
+    t.purchase_amount_usd,
+    t.charge_status,
+    t.transaction_ts,
+
+    r.review_id,
+    r.rating
+
+FROM app_downloads ad
+LEFT JOIN signups s 
+    ON ad.app_download_key = s.session_id
+LEFT JOIN ride_requests rr 
+    ON s.user_id = rr.user_id
+LEFT JOIN transactions t 
+    ON rr.ride_id = t.ride_id
+    AND t.charge_status = 'Approved'
+LEFT JOIN reviews r 
+    ON rr.ride_id = r.ride_id;
+
+
+-- 2. Аналіз конверсії за віковими групами
+
+SELECT
+    age_range,
+    SUM(number_of_users) AS users,
+    SUM(number_of_rides) AS rides,
+    SUM(number_of_rides) * 1.0 / SUM(number_of_users) AS conversion_rate
+FROM funnel_analysis
+GROUP BY age_range
+ORDER BY age_range;
+
+
+-- 3. Рейтинг
+
+SELECT
+    rating,
+    COUNT(*) AS reviews_count
+FROM reviews
+WHERE rating IS NOT NULL
+GROUP BY rating
+ORDER BY rating;
+
+-- 4. Платформи (iOS / Android / Web)
+
+SELECT
+    platform,
+    SUM(number_of_users) AS users,
+    SUM(number_of_rides) AS rides,
+    ROUND(SUM(number_of_rides) * 1.0 / NULLIF(SUM(number_of_users), 0), 4) AS rides_per_user
+FROM funnel_analysis
+GROUP BY platform
+ORDER BY rides_per_user DESC;
+
+
+-- 5. Базовий dataset (Tableau)
+
+WITH user_level AS (
+SELECT
+    ad.app_download_key,
+    ad.platform,
+    DATE(ad.download_ts) AS download_date,
+
+    s.user_id,
+
+    MAX(CASE WHEN s.user_id IS NOT NULL THEN 1 ELSE 0 END) AS is_signup,
+    MAX(CASE WHEN rr.ride_id IS NOT NULL THEN 1 ELSE 0 END) AS is_ride,
+    MAX(CASE WHEN t.ride_id IS NOT NULL THEN 1 ELSE 0 END) AS is_paid
+
+FROM app_downloads ad
+LEFT JOIN signups s 
+    ON ad.app_download_key = s.session_id
+LEFT JOIN ride_requests rr 
+    ON s.user_id = rr.user_id
+LEFT JOIN transactions t 
+    ON rr.ride_id = t.ride_id
+    AND t.charge_status = 'Approved'
+
+GROUP BY
+    ad.app_download_key,
+    ad.platform,
+    DATE(ad.download_ts),
+    s.user_id
+)
+
+SELECT
+    platform,
+    download_date,
+
+    COUNT(DISTINCT app_download_key) AS downloads,
+    COUNT(DISTINCT CASE WHEN is_signup = 1 THEN user_id END) AS signups,
+    COUNT(DISTINCT CASE WHEN is_ride = 1 THEN user_id END) AS riders,
+    COUNT(DISTINCT CASE WHEN is_paid = 1 THEN user_id END) AS payers
+
+FROM user_level
+GROUP BY platform, download_date;
