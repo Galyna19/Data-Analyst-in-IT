@@ -44,6 +44,8 @@ Homework_10_3_1.ipynb - Домашнє завдання: Розширені ме
 
 Homework_10_4_1.ipynb - Домашнє завдання: apply, groupby, pivot_table
 
+Homework_12_2.ipynb - Домашнє завдання: Інтеграція Python та SQL: запити даних
+
 Homework_15_2.ipynb - Домашнє завдання: Перевірка статиcтичних гіпотез. Z-test
 
 Homework_16_1.ipynb - Домашнє завдання: Прогнозування орендної плати за житло
